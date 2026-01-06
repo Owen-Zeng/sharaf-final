@@ -48,4 +48,51 @@ def toggleAnimation(evt):
         
 def toggleSim(evt):
     w = 10
+
+edge1 = box(pos = (-100, 0 ,0))
+edge2 = box(pos = (100, 0, 0))
+
+ball = sphere(pos = initPos, mass = 4, make_trail = True, radius = 0.5)
+
+
+gx = graph(title='vx vs Time', ytitle='velocity x', xtitle='Time')
+gy = graph(title='vy vs Time', ytitle='velocity y', xtitle='Time')
+
+cx = gcurve(graph = gx, color = color.blue)
+cy = gcurve(graph = gy, color = color.purple)
+
+dt = 0.1 
+t = 1 
+g = vec(0, -9.81, 0)
+
+b = float(input("Enter b"))
+v0 = 40
+theta = 35
+
+
+initVel = vec(v0 * cos(radians(theta)), v0 * sin(radians(theta)), 0)
+ball.velocity = initVel
+
+def acc(v, t):
+    return (ball.mass*g - b*v)/ball.mass
     
+    
+def pos(v, t):
+    return v * dt
+
+def RK2(f, X, t, dt):
+    k1 = f(X, t) * dt
+    k2 = f(X + k1/2, t + dt/2) * dt
+    return k2
+    
+while ball.pos.y >= 0:
+    rate(1/dt)
+    
+    ball.velocity += RK2(acc, ball.velocity, t, dt)
+    ball.pos += RK2(pos, ball.velocity, t, dt)
+    
+    t += dt
+    
+    
+    cx.plot(t, ball.velocity.x)
+    cy.plot(t, ball.velocity.y)
