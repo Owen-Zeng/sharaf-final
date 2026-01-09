@@ -19,7 +19,7 @@ fries = []
 
 for i in range(-100, 100, 200/numPlanks):
     nugs.append(sphere(pos = vec(i+100/numPlanks, 0, 0), color = color.orange, radius = 50/numPlanks))
-    fries.append(box(pos = vector(i+100/numPlanks, 0, 0), color = color.yellow, length = 200/numPlanks), eqPos = vec(i+100/numPlanks,0,0))
+    fries.append(box(pos = vector(i+100/numPlanks, 0, 0), color = color.yellow, length = (200/numPlanks), eqPos = vec(i+100/numPlanks,0,0)))
     
 for nug in nugs:
     nug.velocity = vec(0,0,0)
@@ -28,11 +28,6 @@ for fry in fries:
     fry.velocity = vec(0,0,0)
     
 def fryacc(v, t):
-    print(fry.pos)
-    print(fry.eqPos)
-    print(vec(-325234,0,0) - vec(0,0,0))
-    print(fry.pos - fry.eqPos)
-    
     return ((mass*g - b*v)/mass) + (-k * (fry.pos - fry.eqPos)/mass)
 
 def nugacc(v, t):
