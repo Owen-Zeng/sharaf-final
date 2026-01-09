@@ -11,20 +11,32 @@ t = 1
 g = vec(0, -9.81, 0)
 mass = 10
 k = 200
+b = 1
 
 nugs = []
 fries = []
 
+
 for i in range(-100, 100, 200/numPlanks):
     nugs.append(sphere(pos = vec(i+100/numPlanks, 0, 0), color = color.orange, radius = 50/numPlanks))
-    fries.append(box(pos = vector(i+100/numPlanks, 0, 0), color = color.yellow, length = 200/numPlanks))
-
+    fries.append(box(pos = vector(i+100/numPlanks, 0, 0), color = color.yellow, length = 200/numPlanks), eqPos = vec(i+100/numPlanks,0,0))
     
-equilPos.y = 0
+for nug in nugs:
+    nug.velocity = vec(0,0,0)
 
+for fry in fries:
+    fry.velocity = vec(0,0,0)
+    
+def fryacc(v, t):
+    print(fry.pos)
+    print(fry.eqPos)
+    print(vec(-325234,0,0) - vec(0,0,0))
+    print(fry.pos - fry.eqPos)
+    
+    return ((mass*g - b*v)/mass) + (-k * (fry.pos - fry.eqPos)/mass)
 
-def acc(v, t):
-    return ((mass*g - b*v)/mass) + (-k * (ball.pos.y - equilPos)/mass)
+def nugacc(v, t):
+    return ((mass*g - b*v)/mass)
     
 def pos(v, t):
     return v * dt
@@ -37,10 +49,10 @@ def RK2(f, X, t, dt):
 while 1:
     rate(1/dt)
     for nug in nugs:
-        nug.velocity += RK2(acc, nug.velocity, t, dt)
+        nug.velocity += RK2(nugacc, nug.velocity, t, dt)
         nug.pos += RK2(pos, nug.velocity, t, dt)
     for fry in fries:
-        fry.velocity += RK2(acc, fry.velocity, t, dt)
+        fry.velocity += RK2(fryacc, fry.velocity, t, dt)
         fry.pos += RK2(pos, fry.velocity, t, dt)
     
     t += dt
