@@ -1,5 +1,44 @@
 Web VPython 3.2
 
+spring_force = 0
+numPlanks = 0
+character = ""
+running = False
+
+characterList = ["Snowman", "Man", "Chicken"]
+
+
+select_spring_force = slider(bind =  select_k)
+spring_text = wtext(text = "0.05\n")
+def select_k(evt):
+    global spring_force
+    spring_force = select_spring_force.value
+    spring_text.text = str(select_spring_force.value) + "\n"
+    return select_spring_force.value
+
+
+select_planks = slider(bind = plank_num, min = 5, max = 10)
+planks_text = wtext(text = "5\n")
+def plank_num(evt):
+    global numPlanks
+    numPlanks = select_planks.value
+    planks_text.text = str(select_planks.value) + "\n"
+    return select_planks.value
+
+select_char = menu(bind = getChar, choices = characterList)
+character_text = wtext(text = "Snowman\n")
+def getChar(evt):
+    if evt.index == 0:
+        character = "Snowman"
+    elif evt.index == 1:
+        character = "Man"
+    elif evt.index == 2:
+        character = "Chicken"
+
+    character_text.text = character + "\n"
+    return character
+
+
 edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 10, width = 10)
 edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 10, width = 10)
 
