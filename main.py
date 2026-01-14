@@ -38,6 +38,16 @@ def getChar(evt):
     character_text.text = character + "\n"
     return character
 
+start_button = button(bind = start, text = "Start")
+running_text = wtext(text = "Running: False\n")
+def start(evt):
+    global running
+    running = not running
+    if running:
+        start_button.text = "Stop"
+    else:
+        start_button.text = "Start"
+    running_text.text = "Running: " + str(running) + "\n"
 
 edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 10, width = 10)
 edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 10, width = 10)
