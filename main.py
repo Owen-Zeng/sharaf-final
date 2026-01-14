@@ -1,66 +1,19 @@
 Web VPython 3.2
 
-spring_force = 0
-numPlanks = 0
-character = ""
-running = False
+edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 1, width = 10)
+edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 1, width = 10)
 
-characterList = ["Snowman", "Man", "Chicken"]
-
-
-select_spring_force = slider(bind =  select_k)
-spring_text = wtext(text = "0.05\n")
-def select_k(evt):
-    global spring_force
-    spring_force = select_spring_force.value
-    spring_text.text = str(select_spring_force.value) + "\n"
-    return select_spring_force.value
-
-
-select_planks = slider(bind = plank_num, min = 5, max = 10)
-planks_text = wtext(text = "5\n")
-def plank_num(evt):
-    global numPlanks
-    numPlanks = select_planks.value
-    planks_text.text = str(select_planks.value) + "\n"
-    return select_planks.value
-
-select_char = menu(bind = getChar, choices = characterList)
-character_text = wtext(text = "Snowman\n")
-def getChar(evt):
-    if evt.index == 0:
-        character = "Snowman"
-    elif evt.index == 1:
-        character = "Man"
-    elif evt.index == 2:
-        character = "Chicken"
-
-    character_text.text = character + "\n"
-    return character
-
-start_button = button(bind = start, text = "Start")
-running_text = wtext(text = "Running: False\n")
-def start(evt):
-    global running
-    running = not running
-    if running:
-        start_button.text = "Stop"
-    else:
-        start_button.text = "Start"
-    running_text.text = "Running: " + str(running) + "\n"
-
-edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 10, width = 10)
-edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 10, width = 10)
-
-numPlanks = float(input("Enter Number of Planks"))
+numPlanks = int(input("Enter Number of Planks"))
 
 #constants
 dt = 0.1 
 t = 1 
 g = vec(0, -9.81, 0)
-mass = 1000
+mass = 1500
 k = 200
-b = 1
+
+b0 = 2*sqrt(mass*k)
+b = b0*0.1
 
 nugs = []
 fries = []
@@ -77,7 +30,7 @@ for fry in fries:
     fry.velocity = vec(0,0,0)
     
 def springAcc(nug, X):
-    return (-k * (nug.pos - X))/mass
+    return ((-k * (nug.pos - X)) - b*nug.velocity)/mass
 
 def nugacc(v, t):
     return ((mass*g - b*v)/mass)
@@ -91,7 +44,7 @@ def RK2(f, X, t, dt):
     return k2
     #n - n-1, distance from right and left, use distance to delta x, after moving every nugs, then the fries move,
 while 1:
-    rate(50)
+    rate(500)
     for i in range(numPlanks):
         if (i == 0):
             leftAcc = springAcc(nugs[i], edge1.pos)
@@ -105,6 +58,20 @@ while 1:
         totalAcc = RK2(nugacc, nugs[i].velocity, t, dt) + leftAcc + rightAcc
         nugs[i].velocity += totalAcc
         nugs[i].pos += RK2(posi, nugs[i].velocity, t, dt)
-    #for fry in fries:
+    for i in range(len(fries)):
+        if (i == 0):
+            left = edge1.pos
+        else:
+            left = nugs[i].pos
+        if (i == len(fries) - 1):
+            right = edge2.pos
+        else:
+            right = nugs[i+1].pos
+            
+        center = (left + right) / 2
+        axis = right - left
+        fries[i].pos = center
+        fries[i].axis = axis
+        fries[i].length = mag(axis)
     
     t += dt 
