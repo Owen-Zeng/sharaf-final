@@ -12,24 +12,24 @@ characterList = ["Snowman", "Man", "Chicken"]
 
 
 select_spring_force = slider(bind =  select_k)
-spring_text = wtext(text = "0.05\n")
+spring_text = wtext(text = "Spring force(k): " + "0.05\n")
 def select_k(evt):
     global spring_force
     spring_force = select_spring_force.value
-    spring_text.text = str(select_spring_force.value) + "\n"
+    spring_text.text = "Spring force(k): " + str(select_spring_force.value) + "\n"
     return select_spring_force.value
 
 
 select_planks = slider(bind = plank_num, min = 5, max = 10)
-planks_text = wtext(text = "5\n")
+planks_text = wtext(text = "Number of Planks: " + "5\n")
 def plank_num(evt):
     global numPlanks
     numPlanks = select_planks.value
-    planks_text.text = str(select_planks.value) + "\n"
+    planks_text.text = "Number of Planks: " + str(select_planks.value) + "\n"
     return select_planks.value
 
 select_char = menu(bind = getChar, choices = characterList)
-character_text = wtext(text = "Snowman\n")
+character_text = wtext(text = "Character:" + "Snowman\n")
 def getChar(evt):
     if evt.index == 0:
         character = "Snowman"
@@ -38,7 +38,7 @@ def getChar(evt):
     elif evt.index == 2:
         character = "Chicken"
 
-    character_text.text = character + "\n"
+    character_text.text = "Character:" + character + "\n"
     return character
 
 start_button = button(bind = start, text = "Start")
@@ -92,6 +92,8 @@ def RK2(f, X, t, dt):
     k2 = f(X + k1/2, t + dt/2) * dt
     return k2
     #n - n-1, distance from right and left, use distance to delta x, after moving every nugs, then the fries move,
+
+
 while 1:
     rate(500)
     for i in range(numPlanks):
