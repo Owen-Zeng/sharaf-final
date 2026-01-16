@@ -50,12 +50,14 @@ currIndex = -1
 
 
 def keyInput(evt):
+    global currIndex
     s = evt.key
-    if ( s == 'left' and currIndex > -1):
+    if ( s == 'left' and (currIndex > -1)):
         currIndex-=1
     
-    if ( s == 'right' and currIndex < numPlanks):
-        currIndex+=1
+    if ( s == 'right' and (currIndex < numPlanks)):
+         currIndex+=1
+        
 
 scene.bind('keydown', keyInput)
 
