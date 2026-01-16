@@ -1,18 +1,48 @@
+Web VPython 3.2
+scene.background = color.green
+edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 10, width = 10)
+edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 10, width = 10)
+
+numPlanks = float(input("Enter Number of Planks"))
+
+#constants
+dt = 0.1 
+t = 1 
+g = vec(0, -9.81, 0)
+mass = 10
+k = 200
+b = 1
+
+nugs = []
+fries = []
+
 def snowman():
     sphere(pos = vec(-100,10,0), color = color.white, radius = 5)
     sphere(pos = vec(-100,18,0), color = color.white, radius = 4)
     box(pos = vec(-97,11,0), axis = vec(.3,0.35,0), length = 13, color = vec(0.531,0.318,.161))
     box(pos = vec(-103,11,0), axis = vec(-.3,.35, 0), length = 13, color = vec(0.531,0.318,.161))
     arrow(pos = vec(-100,17,2), axis = vec(0, 0, 1), length = 4, color = color.orange)
-    sphere(pos = vec(-101,19,3.2), color = color.black, radius = 1.3)
-    sphere(pos = vec(-99,19,3.2), color = color.black, radius = 1.3)
-    sphere(pos = vec(-100,9,4.5), color = color.black, radius = 0.8)
-    sphere(pos = vec(-100,10.5,4.6), color = color.black, radius = 0.8)
-    sphere(pos = vec(-100,12,3.9), color = color.black, radius = 0.8)
+    
+    sphere(pos = vec(-101,19,2.7), color = color.black, radius = 1.3) #eye
+    sphere(pos = vec(-99,19,2.7), color = color.black, radius = 1.3) #eye
+    
+    sphere(pos = vec(-100,9,4.5), color = color.black, radius = 0.8) #body
+    sphere(pos = vec(-100,10.5,4.6), color = color.black, radius = 0.8) #body 
+    sphere(pos = vec(-100,12,3.9), color = color.black, radius = 0.8) #body
+    
+    sphere(pos = vec(-102,17,2.7), color = color.black, radius = .7) #mouth
+    sphere(pos = vec(-101,16,2.7), color = color.black, radius = .7) #mouth
+    sphere(pos = vec(-100,15.5,2.7), color = color.black, radius = 0.7) #mouth
+    sphere(pos = vec(-99,16,2.7), color = color.black, radius = 0.7) #mouth 
+    sphere(pos = vec(-98,17,2.7), color = color.black, radius = 0.7) #mouth
+    
+    box(pos = vec(-100,22,0), color = color.black, height = 1, length = 8, width = 8)
+    cylinder(pos = vec(-100,23.5,0), color = color.black, length = 6, height = 7, width = 7, axis = vec(0,1,0))
+    cylinder(pos = vec(-100,22.5,0), color = color.red, length = 2, height = 7, width = 7, axis = vec(0,1,0))
     
     
 
-#snowman()
+snowman()
     
 
 for i in range(-100, 100, 200/numPlanks):
