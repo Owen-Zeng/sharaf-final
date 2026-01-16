@@ -42,7 +42,7 @@ def snowman():
     
     
 
-snowman()
+#snowman()
     
 
 for i in range(-100, 100, 200/numPlanks):
@@ -66,12 +66,12 @@ def macBig():
 def chicken():
     sphere(pos = vec(-100,10,0), color = color.yellow, radius = 4)
     sphere(pos = vec(-97,15,0), color = color.yellow, radius = 3)
-    box(pos = vec(-102,8,1), axis = vec(0,1,0), length = 8, color = color.white)
-    box(pos = vec(-102,8,-1), axis = vec(0,1,0), length = 8, color = color.white)
-    box(pos = vec(-100,10.4,3), axis = vec(0,0.5,-0.5), length = 8.5, color = color.white)
-    box(pos = vec(-100,10.4,-3), axis = vec(0,0.5,0.5), length = 8.5, color = color.white)
-    sphere(pos = vec(-95.5,16.5,1), color = color.orange, radius = 1.3)
-    sphere(pos = vec(-95.5,16.5,-1), color = color.orange, radius = 1.3)
-    arrow(pos = vec(-95.2,16,0), length = 3, color = color.orange)
+    box(pos = vec(-102,8,1), axis = vec(0,1,0), length = 8, color = color.yellow)
+    box(pos = vec(-102,8,-1), axis = vec(0,1,0), length = 8, color = color.yellow)
+    box(pos = vec(-100,10.4,3), axis = vec(0,0.5,-0.5), length = 8.5, color = color.yellow)
+    box(pos = vec(-100,10.4,-3), axis = vec(0,0.5,0.5), length = 8.5, color = color.yellow)
+    sphere(pos = vec(-95.5,16.5,1), color = color.red, radius = 1.3)
+    sphere(pos = vec(-95.5,16.5,-1), color = color.red, radius = 1.3)
+    arrow(pos = vec(-95.2,16,0), length = 3, color = color.yellow)
 #chicken()
     
