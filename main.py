@@ -3,7 +3,7 @@ Web VPython 3.2
 edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 1, width = 10)
 edge2 = box(pos = vec(100, 0, 0), color = color.red, length = 10, height = 1, width = 10)
 
-spring_force = 0
+k = 0
 numPlanks = 5
 character = ""
 setup = False
@@ -15,11 +15,11 @@ characterList = ["Snowman", "Man", "Chicken"]
 
 
 
-select_spring_force = slider(bind =  select_k, step = 0.01)
-spring_text = wtext(text = "Spring force(k): " + "0.05\n")
+select_spring_force = slider(bind =  select_k, step = 1, min = 200, max = 1000, value = 200)
+spring_text = wtext(text = "Spring force(k): " + "200\n")
 def select_k(evt):
-    global spring_force
-    spring_force = select_spring_force.value
+    global k 
+    k = select_spring_force.value
     spring_text.text = "Spring force(k): " + str(select_spring_force.value) + "\n"
     return select_spring_force.value
 
@@ -71,7 +71,7 @@ dt = 0.1
 t = 0
 g = vec(0, -9.81, 0)
 mass = 1500
-k = 200
+k = 500
 
 b0 = 2*sqrt(mass*k)
 b = b0*0.1
@@ -96,7 +96,9 @@ def start(evt):
     
     for fry in fries:
         fry.velocity = vec(0,0,0)
+
     start_button.disabled = True
+    select_planks.disabled = True
     
 def run(evt):
     global running
