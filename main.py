@@ -7,7 +7,7 @@ spring_force = 0
 numPlanks = 5
 character = ""
 setup = False
-run = False
+running = False
 characterMass = 200
 
 
@@ -96,13 +96,16 @@ def start(evt):
     
     for fry in fries:
         fry.velocity = vec(0,0,0)
+    start_button.disabled = True
     
 def run(evt):
-    if run:
+    global running
+    running = not running
+    if running:
         run_button.text = "Stop"
     else:
         run_button.text = "Start"
-    run_text.text = "Run: " + str(run) + "\n"
+    run_text.text = "Run: " + running + "\n"
         
         
 def springAcc(nug, X):
@@ -124,7 +127,7 @@ def RK2(f, X, t, dt):
 while 1:
     rate(500)
     if(setup):
-        if run:
+        if running:
             curr = -1
             if (lastLen is not len(prose.text)):
                 if prose.text[len(prose.text)-1] is right and curr < numPlanks-1:
@@ -135,7 +138,7 @@ while 1:
             if curr >= 0:
                 nugs[i].mass += characterMass
         for i in range(numPlanks):
-            mass = nug[i].mass
+            mass = nugs[i].mass
             if (i == 0):
                 leftAcc = springAcc(nugs[i], edge1.pos)
                 rightAcc = springAcc(nugs[i], nugs[i+1].pos)
