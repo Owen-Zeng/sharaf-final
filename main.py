@@ -13,8 +13,6 @@ characterMass = 200
 
 characterList = ["Snowman", "Man", "Chicken"]
 
-
-
 select_spring_force = slider(bind =  select_k, step = 1, min = 200, max = 1000, value = 200)
 spring_text = wtext(text = "Spring force(k): " + "200\n")
 def select_k(evt):
@@ -46,14 +44,18 @@ def getChar(evt):
     return character
     
 mykeys = keysdown()
-prose = label() 
-lastLen = len(prose.text)
+
+currIndex = -1
+#-1 to nugs.length
+
 
 def keyInput(evt):
     s = evt.key
-    if ( s == 'left' or s is 'right' ):
-        prose.text += s
-        
+    if ( s == 'left' and currIndex > -1):
+        currIndex-=1
+    
+    if ( s == 'right' and currIndex < numPlanks):
+        currIndex+=1
 
 scene.bind('keydown', keyInput)
 
@@ -62,7 +64,6 @@ setup_text = wtext(text = "Setup: False\n")
 
 run_button = button(bind = run, text = "Run")
 run_text = wtext(text = "Run: False\n")
-
 
 nugs = []
 fries = []
@@ -78,6 +79,7 @@ b = b0*0.1
 
 def start(evt):
     global setup
+    currIndex = -1
     setup = not setup
     if setup:
         start_button.text = "Stop"
@@ -130,15 +132,11 @@ while 1:
     rate(500)
     if(setup):
         if running:
-            curr = -1
-            if (lastLen is not len(prose.text)):
-                if prose.text[len(prose.text)-1] is right and curr < numPlanks-1:
-                    curr+=1
-                if prose.text[len(prose.text)-1] is left and curr > 0:
-                    curr-=1
-                lastLen = len(prose.text)
-            if curr >= 0:
-                nugs[i].mass += characterMass
+            for i in len(nugs):
+                nugs[i].mass = 1500
+                if (i == currIndex):
+                    nugs[i].mass += characterMass 
+
         for i in range(numPlanks):
             mass = nugs[i].mass
             if (i == 0):
