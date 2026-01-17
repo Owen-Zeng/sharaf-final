@@ -34,24 +34,16 @@ def plank_num(evt):
 select_char = menu(bind = getChar, choices = characterList)
 character_text = wtext(text = "Character:" + "Choose a character\n")
 def getChar(evt):
+    global character
     if evt.index == 0:
         character = "Choose a character"
     elif evt.index == 1:
         character = "Snowman"
-
     elif evt.index == 2:
         character = "Big Mac"
-
     elif evt.index == 3:
         character = "Chicken"
     
-    if (character == 'Big Mac'):
-        macBig()
-    elif (character == 'Chicken'):
-        chicken()
-    elif (character == 'Snowman'):
-        snowman()
-
     character_text.text = "Character:" + character + "\n"
     return character
     
@@ -114,8 +106,16 @@ def start(evt):
     for fry in fries:
         fry.velocity = vec(0,0,0)
 
+    if (character == 'Big Mac'):
+        macBig()
+    elif (character == 'Chicken'):
+        chicken()
+    elif (character == 'Snowman'):
+        snowman()
+
     start_button.disabled = True
     select_planks.disabled = True
+    select_char.disabled = True
     
 def run(evt):
     global running
