@@ -1,3 +1,8 @@
+# Our project is the bridge project where we have a bridge made of "nuggets" that are connected to each other with "fries".
+# The bridge is supported by two blocks at the edges.
+# For our user input, we have a select spring constant slider that moves from 200 to 1000.
+# We also have a slider that 
+
 Web VPython 3.2
 
 scene.background = vec(0.537,0.812,0.941)
@@ -16,11 +21,11 @@ player = None
 characterList = ["Choose a character", "Snowman", "Big Mac", "Chicken"]
 
 select_spring_force = slider(bind =  select_k, step = 1, min = 200, max = 1000, value = 200)
-spring_text = wtext(text = "Spring force(k): " + "200\n")
+spring_text = wtext(text = "Spring constant(k): " + "200\n")
 def select_k(evt):
     global k 
     k = select_spring_force.value
-    spring_text.text = "Spring force(k): " + str(select_spring_force.value) + "\n"
+    spring_text.text = "Spring constant(k): " + str(select_spring_force.value) + "\n"
     return select_spring_force.value
 
 
@@ -155,7 +160,7 @@ while 1:
                 if (i == currIndex):
                     nugs[i].mass += characterMass 
             
-            if player is not None:
+            if player != None:
                 target_pos = vec(0,0,0)
                 if currIndex == -1:
                     target_pos = edge1.pos
