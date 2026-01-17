@@ -10,6 +10,7 @@ character = ""
 setup = False
 running = False
 characterMass = 200
+player = None
 
 
 characterList = ["Choose a character", "Snowman", "Big Mac", "Chicken"]
@@ -50,17 +51,18 @@ def getChar(evt):
 mykeys = keysdown()
 
 currIndex = -1
-#-1 to nugs.length
+
 
 
 def keyInput(evt):
     global currIndex
-    s = evt.key
-    if ( s == 'left' and (currIndex > -1)):
-        currIndex-=1
-    
-    if ( s == 'right' and (currIndex < numPlanks)):
-         currIndex+=1
+    if running:
+        s = evt.key
+        if ( s == 'left' and (currIndex > -1)):
+            currIndex-=1
+        
+        if ( s == 'right' and (currIndex < len(nugs))):
+             currIndex+=1
         
 
 scene.bind('keydown', keyInput)
@@ -106,13 +108,14 @@ def start(evt):
     for fry in fries:
         fry.velocity = vec(0,0,0)
 
+    global player
     if (character == 'Big Mac'):
-        macBig()
+        player = macBig()
     elif (character == 'Chicken'):
-        chicken()
+        player = chicken()
     elif (character == 'Snowman'):
-        snowman()
-
+        player = snowman()
+    
     start_button.disabled = True
     select_planks.disabled = True
     select_char.disabled = True
@@ -140,17 +143,28 @@ def RK2(f, X, t, dt):
     k1 = f(X, t) * dt
     k2 = f(X + k1/2, t + dt/2) * dt
     return k2
-    #n - n-1, distance from right and left, use distance to delta x, after moving every nugs, then the fries move,
+    return k2
 
 
 while 1:
     rate(500)
     if(setup):
         if running:
-            for i in len(nugs):
+            for i in range(len(nugs)):
                 nugs[i].mass = 1500
                 if (i == currIndex):
                     nugs[i].mass += characterMass 
+            
+            if player is not None:
+                target_pos = vec(0,0,0)
+                if currIndex == -1:
+                    target_pos = edge1.pos
+                elif currIndex == len(nugs):
+                    target_pos = edge2.pos
+                else:
+                    target_pos = nugs[currIndex].pos
+                
+                player.pos = target_pos + vec(0, 10, 0) 
 
         for i in range(numPlanks):
             mass = nugs[i].mass
@@ -185,60 +199,63 @@ while 1:
         
         t += dt 
 def snowman():
-    sphere(pos = vec(-100,10,0), color = color.white, radius = 5)
-    sphere(pos = vec(-100,18,0), color = color.white, radius = 4)
-    box(pos = vec(-97,11,0), axis = vec(.3,0.35,0), length = 13, color = vec(0.531,0.318,.161))
-    box(pos = vec(-103,11,0), axis = vec(-.3,.35, 0), length = 13, color = vec(0.531,0.318,.161))
-    arrow(pos = vec(-100,17,2), axis = vec(0, 0, 1), length = 4, color = color.orange)
+    parts = []
+    parts.append(sphere(pos = vec(-100,10,0), color = color.white, radius = 5))
+    parts.append(sphere(pos = vec(-100,18,0), color = color.white, radius = 4))
+    parts.append(box(pos = vec(-97,11,0), axis = vec(.3,0.35,0), length = 13, color = vec(0.531,0.318,.161)))
+    parts.append(box(pos = vec(-103,11,0), axis = vec(-.3,.35, 0), length = 13, color = vec(0.531,0.318,.161)))
+    parts.append(arrow(pos = vec(-100,17,2), axis = vec(0, 0, 1), length = 4, color = color.orange))
     
-    sphere(pos = vec(-101,19,2.7), color = color.black, radius = 1.3) #eye
-    sphere(pos = vec(-99,19,2.7), color = color.black, radius = 1.3) #eye
+    parts.append(sphere(pos = vec(-101,19,2.7), color = color.black, radius = 1.3)) #eye
+    parts.append(sphere(pos = vec(-99,19,2.7), color = color.black, radius = 1.3)) #eye
     
-    sphere(pos = vec(-100,9,4.5), color = color.black, radius = 0.8) #body
-    sphere(pos = vec(-100,10.5,4.6), color = color.black, radius = 0.8) #body 
-    sphere(pos = vec(-100,12,3.9), color = color.black, radius = 0.8) #body
+    parts.append(sphere(pos = vec(-100,9,4.5), color = color.black, radius = 0.8)) #body
+    parts.append(sphere(pos = vec(-100,10.5,4.6), color = color.black, radius = 0.8)) #body 
+    parts.append(sphere(pos = vec(-100,12,3.9), color = color.black, radius = 0.8)) #body
     
-    sphere(pos = vec(-102,17,2.7), color = color.black, radius = .7) #mouth
-    sphere(pos = vec(-101,16,2.7), color = color.black, radius = .7) #mouth
-    sphere(pos = vec(-100,15.5,2.7), color = color.black, radius = 0.7) #mouth
-    sphere(pos = vec(-99,16,2.7), color = color.black, radius = 0.7) #mouth 
-    sphere(pos = vec(-98,17,2.7), color = color.black, radius = 0.7) #mouth
+    parts.append(sphere(pos = vec(-102,17,2.7), color = color.black, radius = .7)) #mouth
+    parts.append(sphere(pos = vec(-101,16,2.7), color = color.black, radius = .7)) #mouth
+    parts.append(sphere(pos = vec(-100,15.5,2.7), color = color.black, radius = 0.7)) #mouth
+    parts.append(sphere(pos = vec(-99,16,2.7), color = color.black, radius = 0.7)) #mouth 
+    parts.append(sphere(pos = vec(-98,17,2.7), color = color.black, radius = 0.7)) #mouth
     
-    box(pos = vec(-100,22,0), color = color.black, height = 1, length = 8, width = 8)
-    cylinder(pos = vec(-100,23.5,0), color = color.black, length = 6, height = 7, width = 7, axis = vec(0,1,0))
-    cylinder(pos = vec(-100,22.5,0), color = color.red, length = 2, height = 7, width = 7, axis = vec(0,1,0))
+    parts.append(box(pos = vec(-100,22,0), color = color.black, height = 1, length = 8, width = 8))
+    parts.append(cylinder(pos = vec(-100,23.5,0), color = color.black, length = 6, height = 7, width = 7, axis = vec(0,1,0)))
+    parts.append(cylinder(pos = vec(-100,22.5,0), color = color.red, length = 2, height = 7, width = 7, axis = vec(0,1,0)))
+    
+    return compound(parts)
     
     
 
-#snowman()
+
     
 
 
     
-#Length y
-#Height x
-#Width z
+
 def macBig():
-    cylinder(pos = vec(-100,5.1,0), axis = vec(0,1,0), height = 5, length = 0.2, width = 5, color = color.orange) #bottom bun
-    cylinder(pos = vec(-100,5.3,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161)) #bottom patty
-    cylinder(pos = vec(-100,5.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow) #bottom cheese
-    cylinder(pos = vec(-100,5.6,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green) #bottom lettuce
-    cylinder(pos = vec(-100,5.7,0), axis = vec(0,1,0), height = 5, length = .5, width = 5, color = color.orange) #middle bun
-    cylinder(pos = vec(-100,6.2,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161)) #top patty
-    cylinder(pos = vec(-100,6.4,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow) #top cheese
-    cylinder(pos = vec(-100,6.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green) #top lettuce
-    sphere(pos = vec(-100,6.7,0), size = vec(5,1.5,5), color = color.orange,) #top bun
-#macBig()
+    parts = []
+    parts.append(cylinder(pos = vec(-100,5.1,0), axis = vec(0,1,0), height = 5, length = 0.2, width = 5, color = color.orange)) #bottom bun
+    parts.append(cylinder(pos = vec(-100,5.3,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161))) #bottom patty
+    parts.append(cylinder(pos = vec(-100,5.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow)) #bottom cheese
+    parts.append(cylinder(pos = vec(-100,5.6,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green)) #bottom lettuce
+    parts.append(cylinder(pos = vec(-100,5.7,0), axis = vec(0,1,0), height = 5, length = .5, width = 5, color = color.orange)) #middle bun
+    parts.append(cylinder(pos = vec(-100,6.2,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161))) #top patty
+    parts.append(cylinder(pos = vec(-100,6.4,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow)) #top cheese
+    parts.append(cylinder(pos = vec(-100,6.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green)) #top lettuce
+    parts.append(sphere(pos = vec(-100,6.7,0), size = vec(5,1.5,5), color = color.orange,)) #top bun
+    return compound(parts)
     
 def chicken():
-    sphere(pos = vec(-100,10,0), color = color.yellow, radius = 4)
-    sphere(pos = vec(-97,15,0), color = color.yellow, radius = 3)
-    box(pos = vec(-102,8,1), axis = vec(0,1,0), length = 8, color = color.yellow)
-    box(pos = vec(-102,8,-1), axis = vec(0,1,0), length = 8, color = color.yellow)
-    box(pos = vec(-100,10.4,3), axis = vec(0,0.5,-0.5), length = 8.5, color = color.yellow)
-    box(pos = vec(-100,10.4,-3), axis = vec(0,0.5,0.5), length = 8.5, color = color.yellow)
-    sphere(pos = vec(-95.5,16.5,1), color = color.red, radius = 1.3)
-    sphere(pos = vec(-95.5,16.5,-1), color = color.red, radius = 1.3)
-    arrow(pos = vec(-95.2,16,0), length = 3, color = color.yellow)
-#chicken()
+    parts = []
+    parts.append(sphere(pos = vec(-100,10,0), color = color.yellow, radius = 4))
+    parts.append(sphere(pos = vec(-97,15,0), color = color.yellow, radius = 3))
+    parts.append(box(pos = vec(-102,8,1), axis = vec(0,1,0), length = 8, color = color.yellow))
+    parts.append(box(pos = vec(-102,8,-1), axis = vec(0,1,0), length = 8, color = color.yellow))
+    parts.append(box(pos = vec(-100,10.4,3), axis = vec(0,0.5,-0.5), length = 8.5, color = color.yellow))
+    parts.append(box(pos = vec(-100,10.4,-3), axis = vec(0,0.5,0.5), length = 8.5, color = color.yellow))
+    parts.append(sphere(pos = vec(-95.5,16.5,1), color = color.red, radius = 1.3))
+    parts.append(sphere(pos = vec(-95.5,16.5,-1), color = color.red, radius = 1.3))
+    parts.append(arrow(pos = vec(-95.2,16,0), length = 3, color = color.yellow))
+    return compound(parts)
     
