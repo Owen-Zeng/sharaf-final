@@ -35,31 +35,23 @@ def plank_num(evt):
 select_char = menu(bind = getChar, choices = characterList)
 character_text = wtext(text = "Character:" + "Choose a character\n")
 def getChar(evt):
+    global character
     if evt.index == 0:
         character = "Choose a character"
     elif evt.index == 1:
         character = "Snowman"
-
     elif evt.index == 2:
         character = "Big Mac"
-
     elif evt.index == 3:
         character = "Chicken"
     
-    if (character == 'Big Mac'):
-        macBig()
-    elif (character == 'Chicken'):
-        chicken()
-    elif (character == 'Snowman'):
-        snowman()
-
     character_text.text = "Character:" + character + "\n"
     return character
     
 mykeys = keysdown()
 
 currIndex = -1
-
+#-1 to nugs.length
 
 
 def keyInput(evt):
@@ -126,6 +118,7 @@ def start(evt):
     
     start_button.disabled = True
     select_planks.disabled = True
+    select_char.disabled = True
     
 def run(evt):
     global running
@@ -150,17 +143,12 @@ def RK2(f, X, t, dt):
     k1 = f(X, t) * dt
     k2 = f(X + k1/2, t + dt/2) * dt
     return k2
-    return k2
+    #n - n-1, distance from right and left, use distance to delta x, after moving every nugs, then the fries move,
 
 
 while 1:
     rate(500)
     if(setup):
-        for i in range(len(nugs)):
-            nugs[i].mass = 1500
-            if (i == currIndex):
-                nugs[i].mass += characterMass 
-                
         if running:
             for i in range(len(nugs)):
                 nugs[i].mass = 1500
@@ -177,6 +165,12 @@ while 1:
                     target_pos = nugs[currIndex].pos
                 
                 player.pos = target_pos + vec(0, 10, 0) 
+                
+
+                pass 
+                
+
+            pass 
 
         for i in range(numPlanks):
             mass = nugs[i].mass
@@ -239,12 +233,14 @@ def snowman():
     
     
 
-
+#snowman()
     
 
 
     
-
+#Length y
+#Height x
+#Width z
 def macBig():
     parts = []
     parts.append(cylinder(pos = vec(-100,5.1,0), axis = vec(0,1,0), height = 5, length = 0.2, width = 5, color = color.orange)) #bottom bun
@@ -257,6 +253,7 @@ def macBig():
     parts.append(cylinder(pos = vec(-100,6.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green)) #top lettuce
     parts.append(sphere(pos = vec(-100,6.7,0), size = vec(5,1.5,5), color = color.orange,)) #top bun
     return compound(parts)
+#macBig()
     
 def chicken():
     parts = []
@@ -270,4 +267,5 @@ def chicken():
     parts.append(sphere(pos = vec(-95.5,16.5,-1), color = color.red, radius = 1.3))
     parts.append(arrow(pos = vec(-95.2,16,0), length = 3, color = color.yellow))
     return compound(parts)
+#chicken()
     
