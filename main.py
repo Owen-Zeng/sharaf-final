@@ -34,16 +34,24 @@ def plank_num(evt):
 select_char = menu(bind = getChar, choices = characterList)
 character_text = wtext(text = "Character:" + "Choose a character\n")
 def getChar(evt):
-    global character
     if evt.index == 0:
         character = "Choose a character"
     elif evt.index == 1:
         character = "Snowman"
+
     elif evt.index == 2:
         character = "Big Mac"
+
     elif evt.index == 3:
         character = "Chicken"
     
+    if (character == 'Big Mac'):
+        macBig()
+    elif (character == 'Chicken'):
+        chicken()
+    elif (character == 'Snowman'):
+        snowman()
+
     character_text.text = "Character:" + character + "\n"
     return character
     
@@ -106,16 +114,8 @@ def start(evt):
     for fry in fries:
         fry.velocity = vec(0,0,0)
 
-    if (character == 'Big Mac'):
-        macBig()
-    elif (character == 'Chicken'):
-        chicken()
-    elif (character == 'Snowman'):
-        snowman()
-
     start_button.disabled = True
     select_planks.disabled = True
-    select_char.disabled = True
     
 def run(evt):
     global running
@@ -146,26 +146,26 @@ def RK2(f, X, t, dt):
 while 1:
     rate(500)
     if(setup):
+        for i in range(len(nugs)):
+            nugs[i].mass = 1500
+            if (i == currIndex):
+                nugs[i].mass += characterMass 
+                
         if running:
-            for i in len(nugs):
-                nugs[i].mass = 1500
-                if (i == currIndex):
-                    nugs[i].mass += characterMass 
-
-        for i in range(numPlanks):
-            mass = nugs[i].mass
-            if (i == 0):
-                leftAcc = springAcc(nugs[i], edge1.pos)
-                rightAcc = springAcc(nugs[i], nugs[i+1].pos)
-            elif (i == numPlanks - 1):
-                leftAcc = springAcc(nugs[i], nugs[i-1].pos)
-                rightAcc = springAcc(nugs[i], edge2.pos)
-            else:
-                leftAcc = springAcc(nugs[i], nugs[i-1].pos)
-                rightAcc = springAcc(nugs[i], nugs[i+1].pos)
-            totalAcc = RK2(nugacc, nugs[i].velocity, t, dt) + leftAcc + rightAcc
-            nugs[i].velocity += totalAcc
-            nugs[i].pos += RK2(posi, nugs[i].velocity, t, dt)
+            for i in range(numPlanks):
+                mass = nugs[i].mass
+                if (i == 0):
+                    leftAcc = springAcc(nugs[i], edge1.pos)
+                    rightAcc = springAcc(nugs[i], nugs[i+1].pos)
+                elif (i == numPlanks - 1):
+                    leftAcc = springAcc(nugs[i], nugs[i-1].pos)
+                    rightAcc = springAcc(nugs[i], edge2.pos)
+                else:
+                    leftAcc = springAcc(nugs[i], nugs[i-1].pos)
+                    rightAcc = springAcc(nugs[i], nugs[i+1].pos)
+                totalAcc = RK2(nugacc, nugs[i].velocity, t, dt) + leftAcc + rightAcc
+                nugs[i].velocity += totalAcc
+                nugs[i].pos += RK2(posi, nugs[i].velocity, t, dt)
         for i in range(len(fries)):
             if (i == 0):
                 left = edge1.pos
