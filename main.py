@@ -97,7 +97,7 @@ def start(evt):
     
     
     for i in range(-100, 100, 200/numPlanks):
-        nugs.append(cylinder(pos = vec(i+100/numPlanks, -10/numPlanks, 0), color = color.orange, axis = vec(0,1,0), size = vec(15/numPlanks, 60/numPlanks, 50/numPlanks), texture = textures.rough, emissive = True,
+        nugs.append(cylinder(pos = vec(i+100/numPlanks, -10/numPlanks, 0), color = color.orange, axis = vec(0,1,0), size = 2*vec(15/numPlanks, 60/numPlanks, 50/numPlanks), texture = textures.rough, emissive = True,
         eqPos = vec(i+100/numPlanks,0,0)))       
         fries.append(box(pos = vector(i+100/numPlanks, 0, 0), color = color.yellow, length = 200/numPlanks, eqPos = vec(i+100/numPlanks,0,0)))
         
