@@ -37,6 +37,7 @@ planks_text = wtext(text = "Number of Planks: " + "4\n")
 def plank_num(evt):
     global numPlanks
     numPlanks = select_planks.value
+    bridge_graph.xmax = numPlanks - 2
     planks_text.text = "Number of Planks: " + str(select_planks.value - 1) + "\n"
     return select_planks.value
 
@@ -144,6 +145,7 @@ def start(evt):
     select_planks.disabled = True
     select_char.disabled = True
     
+    
 def run(evt):
     global running
     running = not running
@@ -169,6 +171,14 @@ def RK2(f, X, t, dt):
     return k2
     #n - n-1, distance from right and left, use distance to delta x, after moving every nugs, then the fries move,
 
+bridge_graph = graph(title="Nug Displacement", 
+                 xtitle="Nug Index", 
+                 ytitle="Y-Position", 
+                 width=600, height=450,
+                 ymax=0,
+                 xmin=0, xmax=numPlanks-1)
+
+curve = gcurve(color=color.blue, label="Bridge Shape")
 
 while 1:
     rate(500)
@@ -223,7 +233,11 @@ while 1:
             fries[i].axis = axis
             fries[i].length = mag(axis)
         
-        
+        data = []
+        for i in range(len(nugs)):
+            data.append((i, nugs[i].pos.y))
+        curve.data = data
+    
         t += dt 
 def snowman():
     parts = []
