@@ -1,9 +1,12 @@
-# Our project is the bridge project where we have a bridge made of "nuggets" that are connected to each other with "fries".
-# The bridge is supported by two blocks at the edges.
-# For our user input, we have a select spring constant slider that moves from 200 to 1000.
-# We also have a slider that 
-
 Web VPython 3.2
+
+# Our project is the bridge project where we have a bridge made of "nuggets" that are connected to each other with "fries".
+# The bridge is supported by two blocks at the edges, and has gravity and spring forces acting on the nuggets in the brdige.
+# For our user input, we have a select spring constant slider that moves from 200 to 1000.
+# We also have a slider that allows the user to select the number of planks.
+# The character is selected from a menu, with either no character, a snowman, a bigmac, or a chicken.
+# The user uses the setup button to set up the bridge after selecting number of planks and their character. 
+# The run button is used to let the user move the chracter around with the left and right arrow keys.
 
 scene.background = vec(0.537,0.812,0.941)
 edge1 = box(pos = vec(-100, 0 ,0), color = color.red, length = 10, height = 1, width = 10, height = 10)
