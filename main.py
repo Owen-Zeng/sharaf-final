@@ -115,7 +115,7 @@ def start(evt):
         player = chicken()
     elif (character == 'Snowman'):
         player = snowman()
-    
+        
     start_button.disabled = True
     select_planks.disabled = True
     select_char.disabled = True
@@ -243,15 +243,15 @@ def snowman():
 #Width z
 def macBig():
     parts = []
-    parts.append(cylinder(pos = vec(-100,5.1,0), axis = vec(0,1,0), height = 5, length = 0.2, width = 5, color = color.orange)) #bottom bun
-    parts.append(cylinder(pos = vec(-100,5.3,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161))) #bottom patty
-    parts.append(cylinder(pos = vec(-100,5.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow)) #bottom cheese
-    parts.append(cylinder(pos = vec(-100,5.6,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green)) #bottom lettuce
-    parts.append(cylinder(pos = vec(-100,5.7,0), axis = vec(0,1,0), height = 5, length = .5, width = 5, color = color.orange)) #middle bun
-    parts.append(cylinder(pos = vec(-100,6.2,0), axis = vec(0,1,0), height = 5, length = .2, width = 5, color = vec(0.531,0.318,.161))) #top patty
-    parts.append(cylinder(pos = vec(-100,6.4,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.yellow)) #top cheese
-    parts.append(cylinder(pos = vec(-100,6.5,0), axis = vec(0,1,0), height = 5, length = .1, width = 5, color = color.green)) #top lettuce
-    parts.append(sphere(pos = vec(-100,6.7,0), size = vec(5,1.5,5), color = color.orange,)) #top bun
+    parts.append(cylinder(pos = vec(-100,5.2,0), axis = vec(0,1,0), height = 6.5, length = 0.4, width = 6.5, color = color.orange)) #bottom bun
+    parts.append(cylinder(pos = vec(-100,5.6,0), axis = vec(0,1,0), height = 6.5, length = .4, width = 6.5, color = vec(0.531,0.318,.161))) #bottom patty
+    parts.append(cylinder(pos = vec(-100,6.0,0), axis = vec(0,1,0), height = 6.5, length = .2, width = 6.5, color = color.yellow)) #bottom cheese
+    parts.append(cylinder(pos = vec(-100,6.2,0), axis = vec(0,1,0), height = 6.5, length = .2, width = 6.5, color = color.green)) #bottom lettuce
+    parts.append(cylinder(pos = vec(-100,6.4,0), axis = vec(0,1,0), height = 6.5, length = 1, width = 6.5, color = color.orange)) #middle bun
+    parts.append(cylinder(pos = vec(-100,7.4,0), axis = vec(0,1,0), height = 6.5, length = .4, width = 6.5, color = vec(0.531,0.318,.161))) #top patty
+    parts.append(cylinder(pos = vec(-100,7.8,0), axis = vec(0,1,0), height = 6.5, length = .2, width = 6.5, color = color.yellow)) #top cheese
+    parts.append(cylinder(pos = vec(-100,8.0,0), axis = vec(0,1,0), height = 6.5, length = .2, width = 6.5, color = color.green)) #top lettuce
+    parts.append(sphere(pos = vec(-100,8.5,0), size = vec(6.5,2.7,6.5), color = color.orange)) #top bun
     return compound(parts)
 #macBig()
     
