@@ -33,11 +33,11 @@ def select_k(evt):
 
 
 select_planks = slider(bind = plank_num, min = 5, max = 10, step = 1)
-planks_text = wtext(text = "Number of Planks: " + "5\n")
+planks_text = wtext(text = "Number of Planks: " + "4\n")
 def plank_num(evt):
     global numPlanks
     numPlanks = select_planks.value
-    planks_text.text = "Number of Planks: " + str(select_planks.value) + "\n"
+    planks_text.text = "Number of Planks: " + str(select_planks.value - 1) + "\n"
     return select_planks.value
 
 select_char = menu(bind = getChar, choices = characterList)
